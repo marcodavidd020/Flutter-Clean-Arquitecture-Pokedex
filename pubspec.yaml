@@ -72,8 +72,10 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
+    - assets/
     - assets/images/
-  
+    - assets/icons/
+
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
 
@@ -85,6 +87,14 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
+  fonts:
+  - family: Poppins
+    fonts:
+    - asset: assets/fonts/Poppins-Regular.ttf
+    - asset: assets/fonts/Poppins-Bold.ttf
+      weight: 600
+    - asset: assets/fonts/Poppins-Thin.ttf
+      weight: 100
   # fonts:
   #   - family: Schyler
   #     fonts:

@@ -1,0 +1,130 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+/**
+ * @file cursor.rules.js
+ * @description Centralized configuration for Flutter projects following Clean Architecture principles.
+ * @see https://resocoder.com/flutter-clean-architecture-tdd/
+ * @see https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html
+ */
+
+module.exports = {
+  /**
+   * Flexibility Notice:
+   * This configuration serves as a guideline. Adapt it to fit your project's existing structure and maintain internal consistency.
+   */
+  flexibility: {
+    allowOverride: true,
+    guidance: [
+      "Adapt these rules to your existing codebase structure.",
+      "Maintain internal consistency and clear separation of concerns.",
+      "Apply Clean Architecture principles without unnecessary rigidity."
+    ]
+  },
+
+  /**
+   * Flutter Best Practices
+   * Key principles for UI development and business logic implementation.
+   */
+  flutterBestPractices: [
+    "Utilize Flutter 3.x and Material 3 for consistent design.",
+    "Implement Clean Architecture with Data, Domain, and Presentation layers.",
+    "Manage state using BLoC or equivalent, decoupled from UI.",
+    "Apply dependency injection (e.g., GetIt, Riverpod).",
+    "Handle errors using functional types (Either/Result).",
+    "Adhere to the Dependency Rule: dependencies point inward."
+  ],
+
+  /**
+   * Project Structure
+   * Based on layer separation and component reuse.
+   */
+  projectStructure: {
+    root: "lib/",
+    core: [
+      "constants/",    // Global values and routes
+      "theme/",        // Theme and style definitions
+      "utils/",        // Helper functions and extensions
+      "widgets/",      // Reusable global widgets
+      "error/",        // Error handling and exceptions
+      "network/",      // HTTP client configuration and interceptors
+      "router/",       // Route definitions and navigation
+      "services/"      // Cross-cutting services (e.g., DB, auth)
+    ],
+    features: {
+      "<featureName>": [
+        "data/datasources/",
+        "data/models/",
+        "data/repositories/",
+        "domain/entities/",
+        "domain/repositories/",
+        "domain/usecases/",
+        "presentation/bloc/",
+        "presentation/pages/",
+        "presentation/widgets/"
+      ]
+    },
+    extras: [
+      "l10n/",   // Localization
+      "main.dart"
+    ],
+    tests: [
+      "test/unit/",
+      "test/widget/",
+      "test/integration/"
+    ]
+  },
+
+  /**
+   * Coding Guidelines
+   * Specific rules for style, null safety, and naming conventions.
+   */
+  codingGuidelines: [
+    "Enable null-safety and avoid unnecessary '!' operators.",
+    "Name classes, methods, and variables using camelCase / PascalCase.",
+    "Validate forms using reusable validators.",
+    "Implement routing with GoRouter or equivalent declarative approach.",
+    "Document public functions with JSDoc/TSDoc.",
+    "Keep functions small (< 30 lines) and focused on a single responsibility."
+  ],
+
+  /**
+   * Widget Guidelines
+   * Best practices for widget composition and optimization.
+   */
+  widgetGuidelines: [
+    "Use const constructors whenever possible.",
+    "Keep widgets small and specialized.",
+    "Apply Keys to optimize rendering.",
+    "Separate UI logic into BLoC and presentation layers.",
+    "Handle loading, error, and empty states with generic widgets.",
+    "Respect accessibility guidelines (labels, contrasts, touch sizes)."
+  ],
+
+  /**
+   * Performance Guidelines
+   * Techniques to optimize UI loading and rendering.
+   */
+  performanceGuidelines: [
+    "Cache images using CachedNetworkImage.",
+    "Use ListView.builder / GridView.builder for long lists.",
+    "Minimize rebuilds with RepaintBoundary and const widgets.",
+    "Dispose controllers (e.g., ScrollController, AnimationController) properly.",
+    "Avoid expensive operations in build(); use Isolates or compute().",
+    "Implement lazy-loading for data pagination."
+  ],
+
+  /**
+   * Testing Guidelines
+   * Strategies for unit, widget, and integration testing.
+   */
+  testingGuidelines: [
+    "Write unit tests for all use cases.",
+    "Create widget tests for critical UI interactions.",
+    "Mock data using Mockito or mocktail.",
+    "Maintain > 80% coverage in domain and data layers.",
+    "Automate tests in CI/CD pipelines (e.g., GitHub Actions, GitLab CI)."
+  ]
+};

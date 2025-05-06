@@ -142,7 +142,7 @@ git clone <url-del-repositorio>
 
 2. Navega al directorio del proyecto:
 ```bash
-cd pokedex_application
+cd Flutter-Clean-Arquitecture-Pokedex
 ```
 
 3. Instala las dependencias:

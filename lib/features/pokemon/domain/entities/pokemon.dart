@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:pokedex_application/features/pokemon/domain/entities/stat.dart';
 
 class Pokemon extends Equatable {
   final int id;
@@ -21,14 +22,42 @@ class Pokemon extends Equatable {
 
   @override
   List<Object> get props => [id, name, imageUrl, types, height, weight, stats];
-}
 
-class Stat extends Equatable {
-  final String name;
-  final int baseStat;
+  factory Pokemon.fromJson(Map<String, dynamic> json) {
+    return Pokemon(
+      id: json['id'] as int,
+      name: json['name'] as String,
+      imageUrl: json['imageUrl'] as String,
+      types: List<String>.from(json['types'] as List),
+      height: json['height'] as int,
+      weight: json['weight'] as int,
+      stats: (json['stats'] as List)
+          .map((stat) => Stat.fromJson(stat as Map<String, dynamic>))
+          .toList(),
+    );
+  }
 
-  const Stat({required this.name, required this.baseStat});
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'imageUrl': imageUrl,
+      'types': types,
+      'height': height,
+      'weight': weight,
+      'stats': stats.map((stat) => stat.toJson()).toList(),
+    };
+  }
 
-  @override
-  List<Object> get props => [name, baseStat];
+  factory Pokemon.empty() {
+    return const Pokemon(
+      id: 0,
+      name: '',
+      imageUrl: '',
+      types: [],
+      height: 0,
+      weight: 0,
+      stats: [],
+    );
+  }
 }

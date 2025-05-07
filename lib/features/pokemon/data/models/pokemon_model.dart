@@ -1,4 +1,5 @@
 import 'package:pokedex_application/features/pokemon/domain/entities/pokemon.dart';
+import 'package:pokedex_application/features/pokemon/domain/entities/stat.dart';
 
 class PokemonModel extends Pokemon {
   const PokemonModel({
@@ -45,13 +46,16 @@ class PokemonModel extends Pokemon {
 }
 
 class StatModel extends Stat {
-  const StatModel({required super.name, required super.baseStat});
+  const StatModel({required super.name, required super.value});
 
   factory StatModel.fromJson(Map<String, dynamic> json) {
-    return StatModel(name: json['stat']['name'], baseStat: json['base_stat']);
+    return StatModel(
+      name: json['stat']['name'],
+      value: json['base_stat'],
+    );
   }
 
   Map<String, dynamic> toJson() {
-    return {'name': name, 'base_stat': baseStat};
+    return {'name': name, 'base_stat': value};
   }
 }

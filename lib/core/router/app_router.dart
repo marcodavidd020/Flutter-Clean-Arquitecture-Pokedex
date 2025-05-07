@@ -5,32 +5,32 @@ import 'package:pokedex_application/features/pokemon/presentation/pages/home_pag
 import 'package:pokedex_application/features/pokemon/presentation/pages/pokemon_detail_page.dart';
 
 class AppRouter {
-  static final GoRouter router = GoRouter(
+  static const String home = 'home';
+  static const String pokemonDetail = 'pokemon_detail';
+
+  static final router = GoRouter(
+    initialLocation: '/',
     routes: [
       GoRoute(
         path: '/',
-        name: 'home',
+        name: home,
         builder: (context, state) => const HomePage(),
-        routes: [
-          GoRoute(
-            path: 'pokemon/:id',
-            name: 'pokemon_detail',
-            builder: (context, state) {
-              final id = state.pathParameters['id']!;
-              final pokemon = state.extra as Pokemon?;
-              return PokemonDetailPage(
-                pokemonId: id,
-                initialPokemon: pokemon,
-              );
-            },
-          ),
-        ],
+      ),
+      GoRoute(
+        path: '/pokemon/:id',
+        name: pokemonDetail,
+        builder: (context, state) {
+          final pokemon = state.extra as Pokemon?;
+          if (pokemon == null) {
+            return const Scaffold(
+              body: Center(
+                child: Text('Error: Pokémon no encontrado'),
+              ),
+            );
+          }
+          return PokemonDetailPage(pokemon: pokemon);
+        },
       ),
     ],
-    errorBuilder:
-        (context, state) => Scaffold(
-          appBar: AppBar(title: const Text('Error')),
-          body: Center(child: Text('Página no encontrada: ${state.error}')),
-        ),
   );
 }

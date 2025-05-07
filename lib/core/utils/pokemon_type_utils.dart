@@ -4,46 +4,91 @@ import 'package:flutter/material.dart';
 class PokemonTypeUtils {
   /// Devuelve el color correspondiente al tipo de Pokémon
   static Color getColorForType(String type) {
-    // Colores modernos y oscuros para los tipos
+    // Colores oficiales del diseño de Figma
     switch (type.toLowerCase()) {
       case 'normal':
-        return const Color(0xFF919AA2); // Gris moderno
+        return const Color(0xFF9DA0AA); // Normal
       case 'fire':
-        return const Color(0xFFFF4C29); // Rojo fuego vibrante
+        return const Color(0xFFFD7D24); // Fire
       case 'water':
-        return const Color(0xFF3A86FF); // Azul oceánico
+        return const Color(0xFF4A90DA); // Water
       case 'grass':
-        return const Color(0xFF38B000); // Verde vibrante
+        return const Color(0xFF62B957); // Grass
       case 'electric':
-        return const Color(0xFFFFB800); // Amarillo eléctrico
+        return const Color(0xFFEED535); // Electric
       case 'ice':
-        return const Color(0xFF48CAE4); // Azul hielo
+        return const Color(0xFF61CEC0); // Ice
       case 'fighting':
-        return const Color(0xFFD62828); // Rojo agresivo
+        return const Color(0xFFD04164); // Fighting
       case 'poison':
-        return const Color(0xFF8338EC); // Púrpura intenso
+        return const Color(0xFFA552CC); // Poison
       case 'ground':
-        return const Color(0xFFAC7C5F); // Marrón tierra
+        return const Color(0xFFDD7748); // Ground
       case 'flying':
-        return const Color(0xFF6096BA); // Azul cielo
+        return const Color(0xFF748FC9); // Flying
       case 'psychic':
-        return const Color(0xFFEF476F); // Rosa vibrante
+        return const Color(0xFFEA5D60); // Psychic
       case 'bug':
-        return const Color(0xFF7CB518); // Verde insecto
+        return const Color(0xFF8CB330); // Bug
       case 'rock':
-        return const Color(0xFF6B705C); // Gris rocoso
+        return const Color(0xFFBAAB82); // Rock
       case 'ghost':
-        return const Color(0xFF5E548E); // Púrpura fantasma
+        return const Color(0xFF556AAE); // Ghost
       case 'dragon':
-        return const Color(0xFF2D00F7); // Azul dragón intenso
+        return const Color(0xFF0F6AC0); // Dragon
       case 'dark':
-        return const Color(0xFF353535); // Negro moderno
+        return const Color(0xFF58575F); // Dark
       case 'steel':
-        return const Color(0xFF6C757D); // Gris acero
+        return const Color(0xFF417D9A); // Steel
       case 'fairy':
-        return const Color(0xFFE0218A); // Rosa fairy intenso
+        return const Color(0xFFED6EC7); // Fairy
       default:
-        return const Color(0xFF919AA2); // Default a normal
+        return const Color(0xFF9DA0AA); // Default a normal
+    }
+  }
+
+  /// Devuelve el color de fondo correspondiente al tipo de Pokémon
+  static Color getBackgroundColorForType(String type) {
+    // Colores de fondo oficiales del diseño de Figma
+    switch (type.toLowerCase()) {
+      case 'normal':
+        return const Color(0xFFB5B9C4); // Normal
+      case 'fire':
+        return const Color(0xFFFFA756); // Fire
+      case 'water':
+        return const Color(0xFF58ABF6); // Water
+      case 'grass':
+        return const Color(0xFF8BBE8A); // Grass
+      case 'electric':
+        return const Color(0xFFF2CB55); // Electric
+      case 'ice':
+        return const Color(0xFF91D8DF); // Ice
+      case 'fighting':
+        return const Color(0xFFEB4971); // Fighting
+      case 'poison':
+        return const Color(0xFF9F6E97); // Poison
+      case 'ground':
+        return const Color(0xFFF78551); // Ground
+      case 'flying':
+        return const Color(0xFF83A2E3); // Flying
+      case 'psychic':
+        return const Color(0xFFFF6568); // Psychic
+      case 'bug':
+        return const Color(0xFF8BD674); // Bug
+      case 'rock':
+        return const Color(0xFFD4C294); // Rock
+      case 'ghost':
+        return const Color(0xFF8571BE); // Ghost
+      case 'dragon':
+        return const Color(0xFF7383B9); // Dragon
+      case 'dark':
+        return const Color(0xFF6F6E78); // Dark
+      case 'steel':
+        return const Color(0xFF4C91B3); // Steel
+      case 'fairy':
+        return const Color(0xFFEBA8C3); // Fairy
+      default:
+        return const Color(0xFFB5B9C4); // Default a normal
     }
   }
 
@@ -95,9 +140,9 @@ class PokemonTypeUtils {
   static Color getTextColorForBackground(Color backgroundColor) {
     // Cálculo de luminosidad para determinar si el texto debe ser blanco o negro
     final luminance =
-        (0.299 * backgroundColor.r +
-            0.587 * backgroundColor.g +
-            0.114 * backgroundColor.b) /
+        (0.299 * backgroundColor.red +
+            0.587 * backgroundColor.green +
+            0.114 * backgroundColor.blue) /
         255;
 
     return luminance > 0.5 ? Colors.black : Colors.white;

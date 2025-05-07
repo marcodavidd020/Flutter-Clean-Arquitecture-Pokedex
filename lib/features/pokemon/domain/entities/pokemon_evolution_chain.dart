@@ -1,4 +1,25 @@
 import 'package:equatable/equatable.dart';
+import 'package:pokedex_application/features/pokemon/domain/entities/pokemon.dart';
+
+class PokemonEvolutionChain extends Equatable {
+  final List<Pokemon> chain;
+  final Map<int, List<int>> evolutionMap;
+
+  const PokemonEvolutionChain({
+    required this.chain,
+    required this.evolutionMap,
+  });
+
+  @override
+  List<Object> get props => [chain, evolutionMap];
+
+  factory PokemonEvolutionChain.empty() {
+    return const PokemonEvolutionChain(
+      chain: [],
+      evolutionMap: {},
+    );
+  }
+}
 
 class EvolutionChain extends Equatable {
   final ChainLink chain;

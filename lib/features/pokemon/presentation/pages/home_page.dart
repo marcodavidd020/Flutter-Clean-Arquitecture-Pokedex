@@ -7,9 +7,12 @@ import 'package:pokedex_application/features/pokemon/presentation/bloc/pokemon_l
 import 'package:pokedex_application/features/pokemon/presentation/bloc/pokemon_list_with_details_event.dart';
 import 'package:pokedex_application/features/pokemon/presentation/bloc/pokemon_list_with_details_state.dart';
 import 'package:pokedex_application/features/pokemon/presentation/constants/presentation_constants.dart';
-import 'package:pokedex_application/features/pokemon/presentation/widgets/pokemon_card.dart';
+import 'package:pokedex_application/features/pokemon/presentation/widgets/home/pokemon_app_bar.dart';
+import 'package:pokedex_application/features/pokemon/presentation/widgets/home/pokemon_build_loading_card.dart';
+import 'package:pokedex_application/features/pokemon/presentation/widgets/home/pokemon_card.dart';
+import 'package:pokedex_application/features/pokemon/presentation/widgets/home/pokemon_search_bar.dart';
 import 'package:pokedex_application/features/pokemon/presentation/widgets/pokemon_error_view.dart';
-import 'package:pokedex_application/features/pokemon/presentation/widgets/pokemon_loading_view.dart';
+import 'package:pokedex_application/features/pokemon/presentation/widgets/home/pokemon_loading_view.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -126,12 +129,12 @@ class _HomePageState extends State<HomePage>
     return CustomScrollView(
       controller: _scrollController,
       slivers: [
-        _buildAppBar(),
+        const PokemonAppBar(),
         SliverPadding(
           padding: const EdgeInsets.symmetric(
             horizontal: PresentationConstants.paddingLarge,
           ),
-          sliver: _buildSearchBar(),
+          sliver: PokemonSearchBar(searchController: _searchController),
         ),
         SliverPadding(
           padding: const EdgeInsets.symmetric(
@@ -140,85 +143,6 @@ class _HomePageState extends State<HomePage>
           sliver: _buildPokemonGrid(pokemons, isLoadingMore),
         ),
       ],
-    );
-  }
-
-  Widget _buildAppBar() {
-    return SliverToBoxAdapter(
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(
-          PresentationConstants.paddingXLarge,
-          48,
-          PresentationConstants.paddingXLarge,
-          PresentationConstants.paddingMedium,
-        ),
-        child: Center(
-          child: Text(
-            AppTexts.appTitle,
-            style: const TextStyle(
-              fontSize: 28,
-              fontWeight: FontWeight.bold,
-              color: Color(0xFFE74C3C),
-              letterSpacing: 2.0,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildSearchBar() {
-    return SliverToBoxAdapter(
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(
-          PresentationConstants.paddingXLarge,
-          PresentationConstants.paddingMedium,
-          PresentationConstants.paddingXLarge,
-          PresentationConstants.paddingLarge,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              AppTexts.searchDescription,
-              style: const TextStyle(fontSize: 14, color: Colors.grey),
-            ),
-            const SizedBox(height: 12),
-            Container(
-              height: 48,
-              decoration: BoxDecoration(
-                color: Colors.grey.shade200,
-                borderRadius: BorderRadius.circular(
-                  PresentationConstants.borderRadiusMedium,
-                ),
-                border: Border.all(color: Colors.grey.shade300, width: 1),
-              ),
-              padding: const EdgeInsets.symmetric(
-                horizontal: PresentationConstants.paddingMedium,
-              ),
-              child: Row(
-                children: [
-                  Icon(Icons.search, color: Colors.grey.shade600),
-                  const SizedBox(width: PresentationConstants.paddingMedium),
-                  Expanded(
-                    child: TextField(
-                      controller: _searchController,
-                      decoration: InputDecoration(
-                        hintText: AppTexts.searchHint,
-                        border: InputBorder.none,
-                        hintStyle: const TextStyle(
-                          fontSize: 14,
-                          color: Colors.grey,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
     );
   }
 
@@ -231,7 +155,9 @@ class _HomePageState extends State<HomePage>
       sliver: SliverGrid(
         delegate: SliverChildBuilderDelegate((context, index) {
           if (index >= pokemons.length) {
-            return _buildLoadingCard();
+            return PokemonBuildLoadingCard(
+              animationController: _animationController,
+            );
           }
 
           final pokemon = pokemons[index];
@@ -250,51 +176,12 @@ class _HomePageState extends State<HomePage>
             },
           );
         }, childCount: isLoadingMore ? pokemons.length + 2 : pokemons.length),
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 1,
           childAspectRatio: PokemonCardConstants.cardAspectRatio,
           crossAxisSpacing: 10,
           mainAxisSpacing: 10,
         ),
-      ),
-    );
-  }
-
-  Widget _buildLoadingCard() {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(
-          PresentationConstants.borderRadiusLarge,
-        ),
-        color: Colors.grey.shade200,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.shade200,
-            spreadRadius: 1,
-            blurRadius: 4,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
-      child: Stack(
-        children: [
-          // Pokeball de fondo
-          Positioned(
-            right: -25,
-            bottom: -25,
-            child: Opacity(
-              opacity: 0.1,
-              child: Image.asset(
-                AppTexts.pokeballImage,
-                width: 120,
-                height: 120,
-                errorBuilder: (_, __, ___) => const SizedBox(),
-              ),
-            ),
-          ),
-          // Indicador de carga
-          const Center(child: CircularProgressIndicator()),
-        ],
       ),
     );
   }

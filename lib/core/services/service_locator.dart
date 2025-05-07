@@ -12,7 +12,7 @@ import 'package:pokedex_application/features/pokemon/domain/usecases/get_pokemon
 import 'package:pokedex_application/features/pokemon/domain/usecases/get_pokemon_list_with_details.dart';
 import 'package:pokedex_application/features/pokemon/presentation/bloc/pokemon_details_bloc.dart';
 import 'package:pokedex_application/features/pokemon/presentation/bloc/pokemon_list_bloc.dart';
-import 'package:pokedex_application/features/pokemon/presentation/bloc/pokemon_evolution_bloc.dart';
+import 'package:pokedex_application/features/pokemon/presentation/bloc/pokemon_evolution/pokemon_evolution_bloc.dart';
 import 'package:pokedex_application/features/pokemon/presentation/bloc/pokemon_list_with_details_bloc.dart';
 
 final sl = GetIt.instance;
@@ -25,7 +25,7 @@ Future<void> initServiceLocator() async {
 
   sl.registerFactory(() => PokemonDetailsBloc(getPokemonDetails: sl()));
 
-  sl.registerFactory(() => PokemonEvolutionBloc(getPokemonEvolutionChain: sl()));
+  sl.registerFactory(() => PokemonEvolutionBloc());
   
   sl.registerFactory(() => PokemonListWithDetailsBloc(getPokemonListWithDetails: sl()));
 
@@ -48,7 +48,12 @@ Future<void> initServiceLocator() async {
   // Core
   sl.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(sl()));
 
-  sl.registerLazySingleton(() => DioClient(dio: sl(), networkInfo: sl()));
+  sl.registerLazySingleton(() => DioClient(
+    dio: sl(), 
+    networkInfo: sl(),
+    // Activar para desarrollo si hay problemas con la verificación de conectividad
+    debugSkipConnectionCheck: false,
+  ));
 
   // Dependencias externas
   sl.registerLazySingleton(() => Dio());

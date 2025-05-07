@@ -8,8 +8,15 @@ import 'package:pokedex_application/core/network/network_info.dart';
 class DioClient {
   final Dio _dio;
   final NetworkInfo networkInfo;
+  
+  // Modo de depuración para desactivar verificación de conexión en desarrollo
+  final bool debugSkipConnectionCheck;
 
-  DioClient({required Dio dio, required this.networkInfo}) : _dio = dio {
+  DioClient({
+    required Dio dio, 
+    required this.networkInfo,
+    this.debugSkipConnectionCheck = false,
+  }) : _dio = dio {
     _dio.options = BaseOptions(
       baseUrl: ApiConstants.baseUrl,
       connectTimeout: const Duration(milliseconds: ApiConstants.connectTimeout),
@@ -35,7 +42,19 @@ class DioClient {
     Map<String, dynamic>? queryParameters,
     Options? options,
   }) async {
-    if (!await networkInfo.isConnected) {
+    bool shouldProceed = true;
+    
+    // Solo verificamos conexión si no estamos en modo debug
+    if (!debugSkipConnectionCheck) {
+      try {
+        shouldProceed = await networkInfo.isConnected;
+      } catch (e) {
+        // Si la verificación falla, intentamos la petición de todas formas
+        shouldProceed = true;
+      }
+    }
+
+    if (!shouldProceed) {
       throw NetworkException(message: 'No hay conexión a internet');
     }
 
@@ -62,7 +81,19 @@ class DioClient {
     Map<String, dynamic>? queryParameters,
     Options? options,
   }) async {
-    if (!await networkInfo.isConnected) {
+    bool shouldProceed = true;
+    
+    // Solo verificamos conexión si no estamos en modo debug
+    if (!debugSkipConnectionCheck) {
+      try {
+        shouldProceed = await networkInfo.isConnected;
+      } catch (e) {
+        // Si la verificación falla, intentamos la petición de todas formas
+        shouldProceed = true;
+      }
+    }
+
+    if (!shouldProceed) {
       throw NetworkException(message: 'No hay conexión a internet');
     }
 

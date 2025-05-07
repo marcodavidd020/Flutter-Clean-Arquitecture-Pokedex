@@ -5,7 +5,7 @@ import 'package:pokedex_application/core/router/app_router.dart';
 import 'package:pokedex_application/core/services/service_locator.dart';
 import 'package:pokedex_application/core/theme/app_theme.dart';
 import 'package:pokedex_application/features/pokemon/presentation/bloc/pokemon_details_bloc.dart';
-import 'package:pokedex_application/features/pokemon/presentation/bloc/pokemon_evolution_bloc.dart';
+import 'package:pokedex_application/features/pokemon/presentation/bloc/pokemon_evolution/pokemon_evolution_bloc.dart';
 import 'package:pokedex_application/features/pokemon/presentation/bloc/pokemon_list_bloc.dart';
 import 'package:pokedex_application/features/pokemon/presentation/bloc/pokemon_list_with_details_bloc.dart';
 

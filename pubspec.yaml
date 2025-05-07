@@ -47,6 +47,10 @@ dependencies:
   lottie: ^3.1.0
   shimmer: ^3.0.0
   google_fonts: ^6.1.0
+  draggable_home: ^1.0.5
+  flutter_svg: ^2.1.0
+  connectivity_plus: ^6.1.4
+  http: ^1.2.1
 
 dev_dependencies:
   flutter_test:

@@ -2,10 +2,10 @@
 # Pokédex App
 
 <div align="center">
-  <img src="images/1.png" width="200" />
-  <img src="images/2.png" width="200" /> 
-  <img src="images/3.png" width="200" />
-  <img src="images/4.png" width="200" />
+  <img src="images/v2/1.png" width="150" />
+  <img src="images/v2/2.png" width="150" />
+  <img src="images/v2/3.png" width="150" />
+  <img src="images/v2/4.png" width="150" />
 </div>
 
 ## Descripción

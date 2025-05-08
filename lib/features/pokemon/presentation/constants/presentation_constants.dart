@@ -34,6 +34,9 @@ class PresentationConstants {
   static const Duration animationLong = Duration(milliseconds: 1000);
   static const Duration animationXLong = Duration(milliseconds: 1500);
   static const Duration animationXXLong = Duration(milliseconds: 3000);
+
+  // Color
+  static const Color backgroundColor = Colors.white;
 }
 
 /// Constantes para las tarjetas de Pokémon

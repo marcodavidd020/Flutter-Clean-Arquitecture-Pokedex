@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pokedex_application/core/constants/app_constants.dart';
 import 'package:pokedex_application/features/pokemon/domain/entities/pokemon.dart';
@@ -73,9 +74,38 @@ class _HomePageState extends State<HomePage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: PresentationConstants.backgroundColor,
       appBar: AppBar(
-        title: Text(AppConstants.appName),
-        backgroundColor: Colors.grey.shade50,
+        backgroundColor: PresentationConstants.backgroundColor,
+        actionsPadding: const EdgeInsets.only(
+          right: PresentationConstants.paddingLarge,
+        ),
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: SvgPicture.asset(
+              'assets/svg/generation.svg',
+              width: 25,
+              height: 25,
+            ),
+          ),
+          IconButton(
+            onPressed: () {},
+            icon: SvgPicture.asset(
+              'assets/svg/sort.svg',
+              width: 25,
+              height: 25,
+            ),
+          ),
+          IconButton(
+            onPressed: () {},
+            icon: SvgPicture.asset(
+              'assets/svg/filter.svg',
+              width: 25,
+              height: 25,
+            ),
+          ),
+        ],
       ),
       body:
           BlocBuilder<PokemonListWithDetailsBloc, PokemonListWithDetailsState>(

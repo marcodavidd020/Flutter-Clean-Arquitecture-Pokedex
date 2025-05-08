@@ -22,7 +22,7 @@ class PokemonImagePlaceholder extends StatelessWidget {
           child: Opacity(
             opacity: ImagePlaceholderConstants.pokeballOpacity,
             child: Image.asset(
-              AppTexts.pokeballImage,
+              PokemonImages.pokeballImage,
               width: ImagePlaceholderConstants.pokeballSize,
               height: ImagePlaceholderConstants.pokeballSize,
               color: Colors.white.withOpacity(0.5),

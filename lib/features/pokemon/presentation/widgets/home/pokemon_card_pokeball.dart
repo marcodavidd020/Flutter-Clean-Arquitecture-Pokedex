@@ -29,7 +29,7 @@ class PokemonCardPokeball extends StatelessWidget {
             ).createShader(bounds),
         blendMode: BlendMode.dstIn,
         child: Image.asset(
-          AppTexts.pokeballImage,
+          PokemonImages.pokeballImage,
           width: PokemonCardConstants.pokeballSize,
           height: PokemonCardConstants.pokeballSize,
           fit: BoxFit.cover,

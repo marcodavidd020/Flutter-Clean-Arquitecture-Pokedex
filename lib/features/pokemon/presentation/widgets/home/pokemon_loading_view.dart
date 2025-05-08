@@ -55,7 +55,7 @@ class _PokemonLoadingAnimation extends StatelessWidget {
       ),
       child: const Center(
         child: Image(
-          image: AssetImage(AppTexts.pokeballImage),
+          image: AssetImage(PokemonImages.pokeballImage),
           width: 100,
           height: 100,
         ),
@@ -142,7 +142,7 @@ class _LoadingAppBar extends StatelessWidget {
               child: Opacity(
                 opacity: 0.2,
                 child: Image(
-                  image: AssetImage(AppTexts.pokeballImage),
+                  image: AssetImage(PokemonImages.pokeballImage),
                   width: 150,
                   height: 150,
                 ),
@@ -372,7 +372,7 @@ class _PokemonCardPlaceholderState extends State<_PokemonCardPlaceholder>
                 ),
                 child: Center(
                   child: Image.asset(
-                    AppTexts.pokeballImage,
+                    PokemonImages.pokeballImage,
                     width: 90,
                     height: 90,
                     color: Colors.white.withOpacity(0.7),

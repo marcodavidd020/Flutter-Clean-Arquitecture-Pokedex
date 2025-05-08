@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:pokedex_application/features/pokemon/presentation/constants/presentation_constants.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class PokemonAppBar extends StatelessWidget {
-  const PokemonAppBar({
+class PokemonHomeTitle extends StatelessWidget {
+  const PokemonHomeTitle({
     super.key,
   });
 

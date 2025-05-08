@@ -7,6 +7,7 @@ import 'package:pokedex_application/features/pokemon/presentation/bloc/pokemon_l
 import 'package:pokedex_application/features/pokemon/presentation/bloc/pokemon_list_with_details_state.dart';
 import 'package:pokedex_application/features/pokemon/presentation/constants/presentation_constants.dart';
 import 'package:pokedex_application/features/pokemon/presentation/widgets/home/pokemon_app_bar.dart';
+import 'package:pokedex_application/features/pokemon/presentation/widgets/home/pokemon_bokeball_background.dart';
 import 'package:pokedex_application/features/pokemon/presentation/widgets/home/pokemon_grid.dart';
 import 'package:pokedex_application/features/pokemon/presentation/widgets/home/pokemon_home_app_bar.dart';
 import 'package:pokedex_application/features/pokemon/presentation/widgets/home/pokemon_search_bar.dart';
@@ -75,9 +76,9 @@ class _HomePageState extends State<HomePage>
       builder: (context, state) {
         if (state is PokemonListWithDetailsInitial ||
             (state is PokemonListWithDetailsLoading && !state.hasInitialData)) {
-          return Scaffold(
-            backgroundColor: PresentationConstants.backgroundColor,
+          return _buildScaffoldWithBackground(
             body: const PokemonGridLoadingView(),
+            withActions: false,
           );
         } else if (state is PokemonListWithDetailsLoaded ||
             state is PokemonListWithDetailsLoadingMore ||
@@ -95,14 +96,13 @@ class _HomePageState extends State<HomePage>
             pokemons = state.initialPokemons;
           }
 
-          return Scaffold(
-            backgroundColor: PresentationConstants.backgroundColor,
-            appBar: const HomeAppBar(),
+          return _buildScaffoldWithBackground(
             body: _buildMainContent(pokemons, isLoadingMore),
+            withActions: true,
           );
         } else if (state is PokemonListWithDetailsError) {
-          return _buildErrorView(
-            PokemonErrorView(
+          return _buildScaffoldWithBackground(
+            body: PokemonErrorView(
               message: state.message,
               onRetry: () {
                 context.read<PokemonListWithDetailsBloc>().add(
@@ -110,6 +110,7 @@ class _HomePageState extends State<HomePage>
                 );
               },
             ),
+            withActions: false,
           );
         }
 
@@ -118,10 +119,30 @@ class _HomePageState extends State<HomePage>
     );
   }
 
-  Widget _buildErrorView(Widget errorWidget) {
+  Widget _buildScaffoldWithBackground({
+    required Widget body,
+    required bool withActions,
+  }) {
     return Scaffold(
-      appBar: const HomeAppBar(),
-      body: errorWidget,
+      backgroundColor: PresentationConstants.backgroundColor,
+      // Eliminamos el AppBar para controlar el espacio completo
+      body: Stack(
+        children: [
+          // Imagen de fondo (Pokeball) - ahora en la parte superior real
+          const PokemonPokeballBackground(),
+          // SafeArea para asegurar que el contenido no se superponga con el notch o la barra de estado
+          SafeArea(
+            child: Column(
+              children: [
+                // Espacio para los iconos de acción solo cuando es necesario
+                if (withActions) const HomeAppBar(),
+                // Contenido principal
+                Expanded(child: body),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -133,10 +154,10 @@ class _HomePageState extends State<HomePage>
       child: CustomScrollView(
         controller: _scrollController,
         slivers: [
-          const PokemonAppBar(),
+          const PokemonHomeTitle(),
           PokemonSearchBar(searchController: _searchController),
           const SliverToBoxAdapter(
-            child: SizedBox(height: PresentationConstants.paddingLarge),
+            child: SizedBox(height: PresentationConstants.paddingXLarge),
           ),
           PokemonGrid(
             pokemons: pokemons,

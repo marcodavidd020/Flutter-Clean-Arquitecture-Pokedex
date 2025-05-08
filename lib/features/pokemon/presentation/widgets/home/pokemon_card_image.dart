@@ -46,7 +46,7 @@ class PokemonCardImage extends StatelessWidget {
           child: Opacity(
             opacity: 0.7,
             child: Image.asset(
-              AppTexts.pokeballImage,
+              PokemonImages.pokeballImage,
               width: 80,
               height: 80,
               color: Colors.white.withOpacity(0.5),

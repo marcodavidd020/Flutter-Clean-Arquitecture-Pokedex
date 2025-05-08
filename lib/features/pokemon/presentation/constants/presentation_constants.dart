@@ -37,6 +37,15 @@ class PresentationConstants {
 
   // Color
   static const Color backgroundColor = Colors.white;
+
+  // Pokeball Home
+  static const double pokeballHomeSize = 500.0;
+  static const double pokeballHomeOpacity = 0.12;
+  static const double pokeballHomeGradientOpacity = 0.0;
+  static const double pokeballHomeGradientOpacityButton = 0.9;
+  static const Color pokeballHomeColor = Colors.black;
+  static const double pokeballHomePositionTop =
+      (pokeballHomeSize * 0.5) - (pokeballHomeSize);
 }
 
 /// Constantes para las tarjetas de Pokémon
@@ -207,9 +216,6 @@ class AppTexts {
   static const String errorTitle = 'Ha ocurrido un error';
   static const String connectionErrorMessage =
       'Parece que hay un problema de conexión. Por favor, verifica tu conexión a internet e intenta nuevamente.';
-
-  // imagenes
-  static const String pokeballImage = 'assets/images/pokeball.png';
 }
 
 /// Constantes para el placeholder de carga de imágenes
@@ -254,6 +260,11 @@ class ParticleEffectConstants {
   static const int particleCount = 20;
   static const int particleSeed = 1234567890;
   static const Color particleColor = Colors.white;
+}
+
+// imagenes
+class PokemonImages {
+  static const String pokeballImage = 'assets/images/pokeball.png';
 }
 
 //Contantes contenido inicial

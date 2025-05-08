@@ -10,33 +10,37 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AppBar(
-      backgroundColor: PresentationConstants.backgroundColor,
-      actionsPadding: const EdgeInsets.only(
-        right: PresentationConstants.paddingLarge,
+    return Padding(
+      padding: const EdgeInsets.only(right: PresentationConstants.paddingLarge),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          IconButton(
+            onPressed: () {},
+            icon: SvgPicture.asset(
+              'assets/svg/generation.svg',
+              width: 25,
+              height: 25,
+            ),
+          ),
+          IconButton(
+            onPressed: () {},
+            icon: SvgPicture.asset(
+              'assets/svg/sort.svg',
+              width: 25,
+              height: 25,
+            ),
+          ),
+          IconButton(
+            onPressed: () {},
+            icon: SvgPicture.asset(
+              'assets/svg/filter.svg',
+              width: 25,
+              height: 25,
+            ),
+          ),
+        ],
       ),
-      actions: [
-        IconButton(
-          onPressed: () {},
-          icon: SvgPicture.asset(
-            'assets/svg/generation.svg',
-            width: 25,
-            height: 25,
-          ),
-        ),
-        IconButton(
-          onPressed: () {},
-          icon: SvgPicture.asset('assets/svg/sort.svg', width: 25, height: 25),
-        ),
-        IconButton(
-          onPressed: () {},
-          icon: SvgPicture.asset(
-            'assets/svg/filter.svg',
-            width: 25,
-            height: 25,
-          ),
-        ),
-      ],
     );
   }
 }

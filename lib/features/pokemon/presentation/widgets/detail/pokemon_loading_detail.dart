@@ -60,7 +60,7 @@ class PokemonLoadingDetail extends StatelessWidget {
               child: Opacity(
                 opacity: 0.1,
                 child: Image.asset(
-                  AppTexts.pokeballImage,
+                  PokemonImages.pokeballImage,
                   width: 200,
                   height: 200,
                   errorBuilder: (_, __, ___) => const SizedBox(),

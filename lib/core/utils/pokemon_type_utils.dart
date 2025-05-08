@@ -136,6 +136,53 @@ class PokemonTypeUtils {
     }
   }
 
+  // getPokemonType(int id) {
+  static String getPokemonType(int id) {
+    if (id <= 10) return 'grass'; // Bulbasaur line
+    if (id <= 20) return 'fire'; // Charmander line
+    if (id <= 30) return 'water'; // Squirtle line
+    if (id <= 40) return 'bug'; // Early bug types
+    if (id <= 50) return 'normal'; // Early normal types
+    if (id <= 60) return 'poison'; // Early poison types
+    if (id <= 70) return 'electric'; // Electric types
+    if (id <= 80) return 'ground'; // Ground types
+    if (id <= 90) return 'fairy'; // Fairy types
+    if (id <= 100) return 'fighting'; // Fighting types
+    if (id <= 110) return 'psychic'; // Psychic types
+    if (id <= 120) return 'rock'; // Rock types
+    if (id <= 130) return 'ice'; // Ice types
+    if (id % 5 == 0) return 'dragon'; // Some dragon types
+    if (id % 7 == 0) return 'ghost'; // Some ghost types
+    if (id % 11 == 0) return 'dark'; // Some dark types
+    if (id % 13 == 0) return 'steel'; // Some steel types
+
+    // Ciclo de tipos basado en el módulo para el resto
+    int typeIndex = id % 7;
+    switch (typeIndex) {
+      case 0:
+        return 'fire';
+      case 1:
+        return 'water';
+      case 2:
+        return 'grass';
+      case 3:
+        return 'electric';
+      case 4:
+        return 'psychic';
+      case 5:
+        return 'rock';
+      case 6:
+        return 'normal';
+      default:
+        return 'normal';
+    }
+  }
+
+  //Type Icon Svg
+  static String getSvgTypeIcon(String type) {
+    return 'assets/icons/${type.toLowerCase()}.svg';
+  }
+
   /// Devuelve el color de texto adecuado (blanco o negro) según el color de fondo
   static Color getTextColorForBackground(Color backgroundColor) {
     // Cálculo de luminosidad para determinar si el texto debe ser blanco o negro

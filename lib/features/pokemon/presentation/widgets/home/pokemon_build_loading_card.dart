@@ -51,7 +51,7 @@ class PokemonBuildLoadingCard extends StatelessWidget {
             child: Opacity(
               opacity: 0.2,
               child: Image.asset(
-                AppTexts.pokeballImage,
+                PokemonImages.pokeballImage,
                 width: 120,
                 height: 120,
                 errorBuilder: (_, __, ___) => const SizedBox(),
@@ -157,7 +157,7 @@ class PokemonBuildLoadingCard extends StatelessWidget {
                     shape: BoxShape.circle,
                   ),
                   child: Image.asset(
-                    AppTexts.pokeballImage,
+                    PokemonImages.pokeballImage,
                     width: 80,
                     height: 80,
                     color: Colors.white.withOpacity(0.7),

@@ -56,7 +56,7 @@ class _PokemonHeaderPokeballBackgroundState extends State<PokemonHeaderPokeballB
                 },
                 blendMode: BlendMode.dstIn,
                 child: Image.asset(
-                  AppTexts.pokeballImage,
+                  PokemonImages.pokeballImage,
                   width: 100,
                   height: 100,
                   fit: BoxFit.contain,

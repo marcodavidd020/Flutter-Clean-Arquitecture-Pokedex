@@ -1,30 +1,54 @@
-import 'dart:math' show pi;
 
+import 'dart:math';
+
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:pokedex_application/features/pokemon/presentation/constants/presentation_constants.dart';
 
-/// Placeholder animado para mostrar durante la carga de imágenes de Pokémon
-class PokemonImagePlaceholder extends StatelessWidget {
-  const PokemonImagePlaceholder({super.key});
+class PokemonCardImage extends StatelessWidget {
+  final String imageUrl;
+  final int id;
+
+  const PokemonCardImage({super.key, required this.imageUrl, required this.id});
 
   @override
   Widget build(BuildContext context) {
+    return Positioned(
+      right: 10,
+      top: -25,
+      child: Hero(
+        tag: 'pokemon-detail-${id}',
+        child: CachedNetworkImage(
+          imageUrl: imageUrl,
+          width: 127,
+          height: 127,
+          placeholder: (context, url) => _buildImagePlaceholder(),
+          errorWidget:
+              (context, url, error) =>
+                  const Icon(Icons.error, size: 60, color: Colors.red),
+        ),
+      ),
+    );
+  }
+
+  // Método para construir el placeholder de imagen con animación
+  Widget _buildImagePlaceholder() {
     return Stack(
       alignment: Alignment.center,
       children: [
-        // Pokeball de fondo con animación de rotación
+        // Pokeball de fondo con animación
         TweenAnimationBuilder<double>(
           tween: Tween<double>(begin: 0, end: 1),
-          duration: PokemonDetailConstants.loadingAnimationDuration,
+          duration: const Duration(milliseconds: 1500),
           builder: (context, value, child) {
             return Transform.rotate(angle: value * 2 * pi, child: child);
           },
           child: Opacity(
-            opacity: ImagePlaceholderConstants.pokeballOpacity,
+            opacity: 0.7,
             child: Image.asset(
               PokemonImages.pokeballImage,
-              width: ImagePlaceholderConstants.pokeballSize,
-              height: ImagePlaceholderConstants.pokeballSize,
+              width: 80,
+              height: 80,
               color: Colors.white.withOpacity(0.5),
             ),
           ),
@@ -32,17 +56,14 @@ class PokemonImagePlaceholder extends StatelessWidget {
 
         // Efecto de brillo/pulso
         TweenAnimationBuilder<double>(
-          tween: Tween<double>(
-            begin: ImagePlaceholderConstants.glowInitialOpacity,
-            end: ImagePlaceholderConstants.glowFinalOpacity,
-          ),
-          duration: PokemonDetailConstants.pulseAnimationDuration,
+          tween: Tween<double>(begin: 0.5, end: 1.0),
+          duration: const Duration(milliseconds: 800),
           builder: (context, value, child) {
             return Opacity(
               opacity: value,
               child: Container(
-                width: ImagePlaceholderConstants.glowSize,
-                height: ImagePlaceholderConstants.glowSize,
+                width: 50,
+                height: 50,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   gradient: RadialGradient(

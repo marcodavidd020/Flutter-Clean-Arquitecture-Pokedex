@@ -73,7 +73,10 @@ class _HomePageState extends State<HomePage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade50,
+      appBar: AppBar(
+        title: Text(AppConstants.appName),
+        backgroundColor: Colors.grey.shade50,
+      ),
       body:
           BlocBuilder<PokemonListWithDetailsBloc, PokemonListWithDetailsState>(
             builder: (context, state) {
@@ -129,59 +132,57 @@ class _HomePageState extends State<HomePage>
     return CustomScrollView(
       controller: _scrollController,
       slivers: [
-        const PokemonAppBar(),
-        SliverPadding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: PresentationConstants.paddingLarge,
-          ),
-          sliver: PokemonSearchBar(searchController: _searchController),
+        _buildSliverPadding(const PokemonAppBar()),
+        _buildSliverPadding(
+          PokemonSearchBar(searchController: _searchController),
         ),
-        SliverPadding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: PresentationConstants.paddingLarge,
-          ),
-          sliver: _buildPokemonGrid(pokemons, isLoadingMore),
+        SliverToBoxAdapter(
+          child: const SizedBox(height: PresentationConstants.paddingLarge),
         ),
+        _buildSliverPadding(_buildPokemonGrid(pokemons, isLoadingMore)),
       ],
     );
   }
 
-  Widget _buildPokemonGrid(List<Pokemon> pokemons, bool isLoadingMore) {
+  SliverPadding _buildSliverPadding(Widget sliver) {
     return SliverPadding(
-      padding: const EdgeInsets.only(
-        left: PresentationConstants.paddingXLarge - 2,
-        right: PresentationConstants.paddingXLarge - 2,
+      padding: const EdgeInsets.symmetric(
+        horizontal: PresentationConstants.paddingXLarge,
       ),
-      sliver: SliverGrid(
-        delegate: SliverChildBuilderDelegate((context, index) {
-          if (index >= pokemons.length) {
-            return PokemonBuildLoadingCard(
-              animationController: _animationController,
-            );
-          }
+      sliver: sliver,
+    );
+  }
 
-          final pokemon = pokemons[index];
-
-          return PokemonCard(
-            id: pokemon.id,
-            name: pokemon.name,
-            imageUrl: pokemon.imageUrl,
-            types: pokemon.types,
-            onTap: () {
-              context.goNamed(
-                'pokemon_detail',
-                pathParameters: {'id': pokemon.id.toString()},
-                extra: pokemon,
-              );
-            },
+  Widget _buildPokemonGrid(List<Pokemon> pokemons, bool isLoadingMore) {
+    return SliverGrid(
+      delegate: SliverChildBuilderDelegate((context, index) {
+        if (index >= pokemons.length) {
+          return PokemonBuildLoadingCard(
+            animationController: _animationController,
           );
-        }, childCount: isLoadingMore ? pokemons.length + 2 : pokemons.length),
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 1,
-          childAspectRatio: PokemonCardConstants.cardAspectRatio,
-          crossAxisSpacing: 10,
-          mainAxisSpacing: 10,
-        ),
+        }
+
+        final pokemon = pokemons[index];
+
+        return PokemonCard(
+          id: pokemon.id,
+          name: pokemon.name,
+          imageUrl: pokemon.imageUrl,
+          types: pokemon.types,
+          onTap: () {
+            context.goNamed(
+              'pokemon_detail',
+              pathParameters: {'id': pokemon.id.toString()},
+              extra: pokemon,
+            );
+          },
+        );
+      }, childCount: isLoadingMore ? pokemons.length + 2 : pokemons.length),
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: PokemonCardConstants.cardCrossAxisCount,
+        childAspectRatio: PokemonCardConstants.cardAspectRatio,
+        crossAxisSpacing: PokemonCardConstants.cardCrossAxisSpacing,
+        mainAxisSpacing: PokemonCardConstants.cardMainAxisSpacing,
       ),
     );
   }

@@ -1,13 +1,15 @@
 import 'dart:math' show pi;
 
-import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pokedex_application/core/utils/pokemon_type_utils.dart';
 import 'package:pokedex_application/core/utils/string_utils.dart';
-import 'package:pokedex_application/core/widgets/circular_matrix.dart';
 import 'package:pokedex_application/features/pokemon/presentation/constants/presentation_constants.dart';
+import 'package:pokedex_application/features/pokemon/presentation/widgets/home/points_card.dart';
+import 'package:pokedex_application/features/pokemon/presentation/widgets/home/pokemon_card_pokeball.dart';
+import 'package:pokedex_application/features/pokemon/presentation/widgets/home/pokemon_shape_background.dart';
 
 class PokemonCard extends StatefulWidget {
   final int id;
@@ -42,8 +44,8 @@ class _PokemonCardState extends State<PokemonCard>
       vsync: this,
     );
     _scaleAnimation = Tween<double>(
-      begin: 1.0,
-      end: 0.95,
+      begin: PokemonCardConstants.animationScaleStart,
+      end: PokemonCardConstants.animationScaleEnd,
     ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
   }
 
@@ -53,57 +55,13 @@ class _PokemonCardState extends State<PokemonCard>
     super.dispose();
   }
 
-  String _getPokemonType(int id) {
-    // Si tenemos tipos reales, usar el primero
-    if (widget.types != null && widget.types!.isNotEmpty) {
-      return widget.types!.first;
-    }
-
-    // De lo contrario, asignar tipo basado en el id (esto es para retrocompatibilidad)
-    if (id <= 10) return 'grass'; // Bulbasaur line
-    if (id <= 20) return 'fire'; // Charmander line
-    if (id <= 30) return 'water'; // Squirtle line
-    if (id <= 40) return 'bug'; // Early bug types
-    if (id <= 50) return 'normal'; // Early normal types
-    if (id <= 60) return 'poison'; // Early poison types
-    if (id <= 70) return 'electric'; // Electric types
-    if (id <= 80) return 'ground'; // Ground types
-    if (id <= 90) return 'fairy'; // Fairy types
-    if (id <= 100) return 'fighting'; // Fighting types
-    if (id <= 110) return 'psychic'; // Psychic types
-    if (id <= 120) return 'rock'; // Rock types
-    if (id <= 130) return 'ice'; // Ice types
-    if (id % 5 == 0) return 'dragon'; // Some dragon types
-    if (id % 7 == 0) return 'ghost'; // Some ghost types
-    if (id % 11 == 0) return 'dark'; // Some dark types
-    if (id % 13 == 0) return 'steel'; // Some steel types
-
-    // Ciclo de tipos basado en el módulo para el resto
-    int typeIndex = id % 7;
-    switch (typeIndex) {
-      case 0:
-        return 'fire';
-      case 1:
-        return 'water';
-      case 2:
-        return 'grass';
-      case 3:
-        return 'electric';
-      case 4:
-        return 'psychic';
-      case 5:
-        return 'rock';
-      case 6:
-        return 'normal';
-      default:
-        return 'normal';
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     // Obtener el tipo principal basado en el id o en los tipos proporcionados
-    final String mainType = _getPokemonType(widget.id);
+    final String mainType =
+        widget.types != null && widget.types!.isNotEmpty
+            ? widget.types!.first
+            : PokemonTypeUtils.getPokemonType(widget.id);
     final bgColor = PokemonTypeUtils.getBackgroundColorForType(mainType);
 
     return GestureDetector(
@@ -118,217 +76,142 @@ class _PokemonCardState extends State<PokemonCard>
         builder: (context, child) {
           return Transform.scale(scale: _scaleAnimation.value, child: child);
         },
-        child: Container(
-          height: 130,
-          margin: const EdgeInsets.symmetric(vertical: 10),
-          child: Stack(
-            clipBehavior: Clip.none,
-            children: [
-              // Sombra de fondo
-              Positioned(
-                top: 20,
-                left: 20,
-                right: 20,
-                child: Container(
-                  height: 95,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(10),
-                    boxShadow: [
-                      BoxShadow(
-                        color: bgColor.withOpacity(0.4),
-                        spreadRadius: 0,
-                        blurRadius: 20,
-                        offset: const Offset(0, 10),
-                      ),
-                    ],
-                  ),
+        child: Stack(
+          clipBehavior: Clip.none,
+          children: [
+            // Sombra de fondo
+            ShapeBackground(bgColor: bgColor),
+
+            Container(
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+              decoration: BoxDecoration(
+                color: bgColor,
+                borderRadius: BorderRadius.circular(
+                  PokemonCardConstants.borderRadius,
                 ),
               ),
+              child: Stack(
+                children: [
+                  // Patrón de puntos
+                  const PointsCard(),
 
-              // Fondo de color principal
-              Positioned(
-                top: 0,
-                left: 0,
-                right: 0,
-                child: Container(
-                  height: 115,
-                  decoration: BoxDecoration(
-                    color: bgColor,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
-                    child: Stack(
+                  // Pokeball de fondo
+                  const PokemonCardPokeball(),
+
+                  // Información del Pokémon
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      left: PokemonCardConstants.informationPaddingLeft,
+                      top: PokemonCardConstants.informationPaddingTop,
+                    ),
+                    child: Column(
+                      mainAxisSize:
+                          MainAxisSize.min, // Usar espacio mínimo necesario
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        // Patrón de puntos
-                        Positioned(
-                          left: 110,
-                          top: 5,
-                          child: Opacity(
-                            opacity: 0.3,
-                            child: CircularMatrix(
-                              rows: 3,
-                              columns: 6,
-                              size: 5,
-                              spaceBetween: 10,
-                              color: Colors.white,
-                            ),
+                        // Número del Pokémon
+                        Text(
+                          '#${widget.id.toString().padLeft(3, '0')}',
+                          style: GoogleFonts.poppins(
+                            fontSize: PokemonCardConstants.numberFontSize,
+                            fontWeight: FontWeight.bold,
+                            color: PokemonCardConstants.numberColor,
                           ),
                         ),
 
-                        // Pokeball de fondo
-                        Positioned(
-                          right: -10,
-                          bottom: -15,
-                          child: SizedBox(
-                            width: 145,
-                            height: 145,
-                            child: ShaderMask(
-                              shaderCallback:
-                                  (bounds) => LinearGradient(
-                                    begin: Alignment.topCenter,
-                                    end: Alignment.bottomCenter,
-                                    colors: [
-                                      Colors.white.withOpacity(0.3),
-                                      Colors.white.withOpacity(0.0),
-                                    ],
-                                  ).createShader(bounds),
-                              blendMode: BlendMode.dstIn,
-                              child: Image.asset(
-                                AppTexts.pokeballImage,
-                                width: 145,
-                                height: 145,
-                                fit: BoxFit.cover,
-                                color: Colors.white,
-                                colorBlendMode: BlendMode.srcIn,
-                              ),
-                            ),
+                        // Nombre del Pokémon
+                        Text(
+                          widget.name.capitalize(),
+                          style: GoogleFonts.poppins(
+                            fontSize: PokemonCardConstants.nameFontSize,
+                            fontWeight: FontWeight.bold,
+                            color: PokemonCardConstants.nameColor,
                           ),
+                          overflow:
+                              TextOverflow.ellipsis, // Evitar desbordamiento
                         ),
 
-                        // Información del Pokémon
-                        Padding(
-                          padding: const EdgeInsets.only(left: 20, top: 16),
-                          child: SizedBox(
-                            // Limitar altura máxima disponible para el contenido
-                            height: 90,
-                            child: Column(
-                              mainAxisSize:
-                                  MainAxisSize
-                                      .min, // Usar espacio mínimo necesario
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                        const SizedBox(height: 3), // Reducir espacio
+                        // Badge de tipo - usar Flexible para que se ajuste al espacio
+                        if (widget.types != null && widget.types!.isNotEmpty)
+                          Flexible(
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
                               children: [
-                                // Número del Pokémon
-                                Text(
-                                  '#${widget.id.toString().padLeft(3, '0')}',
-                                  style: GoogleFonts.poppins(
-                                    fontSize: 8,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black.withOpacity(0.6),
-                                  ),
-                                ),
-
-                                // Nombre del Pokémon
-                                Text(
-                                  widget.name.capitalize(),
-                                  style: GoogleFonts.poppins(
-                                    fontSize: 17, // Reducir tamaño de fuente
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
-                                  ),
-                                  overflow:
-                                      TextOverflow
-                                          .ellipsis, // Evitar desbordamiento
-                                ),
-
-                                const SizedBox(height: 3), // Reducir espacio
-                                // Badge de tipo - usar Flexible para que se ajuste al espacio
-                                if (widget.types != null &&
-                                    widget.types!.isNotEmpty)
-                                  Flexible(
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        // Iterar sobre todos los tipos disponibles
-                                        ...widget.types!
-                                            .map(
-                                              (type) => Padding(
-                                                padding: const EdgeInsets.only(
-                                                  right: 5,
+                                // Iterar sobre todos los tipos disponibles
+                                ...widget.types!
+                                    .map(
+                                      (type) => Padding(
+                                        padding: const EdgeInsets.only(
+                                          right: 5,
+                                        ),
+                                        child: Container(
+                                          padding: const EdgeInsets.symmetric(
+                                            horizontal: 5,
+                                            vertical:
+                                                3, // Reducir padding vertical
+                                          ),
+                                          decoration: BoxDecoration(
+                                            color:
+                                                PokemonTypeUtils.getColorForType(
+                                                  type,
                                                 ),
-                                                child: Container(
-                                                  padding:
-                                                      const EdgeInsets.symmetric(
-                                                        horizontal: 5,
-                                                        vertical:
-                                                            3, // Reducir padding vertical
-                                                      ),
-                                                  decoration: BoxDecoration(
-                                                    color:
-                                                        PokemonTypeUtils.getColorForType(
-                                                          type,
-                                                        ),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                          3,
-                                                        ),
-                                                  ),
-                                                  child: Row(
-                                                    mainAxisSize:
-                                                        MainAxisSize.min,
-                                                    children: [
-                                                      _buildTypeIcon(type),
-                                                      const SizedBox(width: 5),
-                                                      Text(
-                                                        type.capitalize(),
-                                                        style: GoogleFonts.poppins(
-                                                          fontSize:
-                                                              9, // Reducir tamaño de fuente
-                                                          color: Colors.white,
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
+                                            borderRadius: BorderRadius.circular(
+                                              PokemonCardConstants.borderRadiusType,
+                                            ),
+                                          ),
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              _buildTypeIcon(type),
+                                              const SizedBox(width: 5),
+                                              Text(
+                                                type.capitalize(),
+                                                style: GoogleFonts.poppins(
+                                                  fontSize:
+                                                      9, // Reducir tamaño de fuente
+                                                  color: Colors.white,
                                                 ),
                                               ),
-                                            )
-                                            .toList(),
-                                      ],
-                                    ),
-                                  ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                    .toList(),
                               ],
                             ),
                           ),
-                        ),
                       ],
                     ),
                   ),
-                ),
+                ],
               ),
+            ),
 
-              // Imagen del Pokémon
-              Positioned(
-                right: 10,
-                top: -25,
-                child: Hero(
-                  tag: 'pokemon-detail-${widget.id}',
-                  child: CachedNetworkImage(
-                    imageUrl: widget.imageUrl,
-                    width: 127,
-                    height: 127,
-                    placeholder: (context, url) => _buildImagePlaceholder(),
-                    errorWidget:
-                        (context, url, error) => const Icon(
-                          Icons.error,
-                          size: 60,
-                          color: Colors.red,
-                        ),
-                  ),
-                ),
-              ),
-            ],
-          ),
+            // Imagen del Pokémon
+            _pokemonImage(widget.imageUrl),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _pokemonImage(String imageUrl) {
+    return Positioned(
+      right: 10,
+      top: -25,
+      child: Hero(
+        tag: 'pokemon-detail-${widget.id}',
+        child: CachedNetworkImage(
+          imageUrl: imageUrl,
+          width: 127,
+          height: 127,
+          placeholder: (context, url) => _buildImagePlaceholder(),
+          errorWidget:
+              (context, url, error) =>
+                  const Icon(Icons.error, size: 60, color: Colors.red),
         ),
       ),
     );

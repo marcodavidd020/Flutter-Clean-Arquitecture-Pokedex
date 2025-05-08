@@ -5,11 +5,11 @@ import 'package:flutter/material.dart';
 /// Constantes globales de presentación
 class PresentationConstants {
   // Dimensiones comunes
-  static const double paddingSmall = 4.0;
-  static const double paddingMedium = 8.0;
-  static const double paddingLarge = 16.0;
-  static const double paddingXLarge = 24.0;
-  static const double paddingXXLarge = 32.0;
+  static const double paddingSmall = 10.0;
+  static const double paddingMedium = 20.0;
+  static const double paddingLarge = 30.0;
+  static const double paddingXLarge = 40.0;
+  static const double paddingXXLarge = 50.0;
 
   // Dimensiones de bordes
   static const double borderRadiusSmall = 8.0;
@@ -38,19 +38,54 @@ class PresentationConstants {
 
 /// Constantes para las tarjetas de Pokémon
 class PokemonCardConstants {
+  // Aspect Ratio
+  static const double cardAspectRatio = 3.3;
+
+  static const int cardCrossAxisCount = 1;
+  static const double cardCrossAxisSpacing = 25.0;
+  static const double cardMainAxisSpacing = 35.0;
+
+  // Información del Pokémon
+  static const double informationPadding = 20.0;
+  static const double informationPaddingTop = 16.0;
+  static const double informationPaddingLeft = 20.0;
+  static const double informationPaddingRight = 20.0;
+  static const double informationPaddingBottom = 16.0;
+
+  static const double numberFontSize = 8.0;
+  static const double nameFontSize = 17.0;
+
+  //color
+  static Color numberColor = Colors.black.withOpacity(0.6);
+  static const Color nameColor = Colors.white;
+
+  // Animation
+  static const double animationScaleEnd = 0.95;
+  static const double animationScaleStart = 1.0;
+
   // Dimensiones y proporciones
-  static const double borderRadius = 16.0;
-  static const double smallSpacing = 4.0;
-  static const double padding = 16.0;
-  static const double pokeballOpacity = 0.15;
-  static const double imageOverflow =
-      45.0; // Factor de sobresalido de la imagen
-  static const double imageScale = 1.0; // Escala de la imagen
-  static const double cardAspectRatio = 2.8;
+  static const double borderRadius = 10.0;
+  static const double borderRadiusType = 3.0;
+
+  // Patrones de puntos
+  static const int rowsPoints = 3;
+  static const int columnsPoints = 6;
+  static const double sizePoints = 5.0;
+  static const double spaceBetweenPoints = 10.0;
+  static const Color colorPoints = Colors.white;
+  static const double opacityPoints = 0.3;
+  static const double positionPointsLeft = 110.0;
+  static const double positionPointsTop = 5.0;
 
   // Tamaños de texto
-  static const double idFontSize = 14.0;
-  static const double nameFontSize = 16.0;
+
+  // Image Pokeball fondo
+  static const double pokeballSize = 155.0;
+  static const double positionPokeballRight = -10.0;
+  static const double positionPokeballBottom = -15.0;
+  static const double positionPokeballOpacity = 0.3;
+  static const double positionPokeballGradientOpacity = 0.0;
+  static const Color pokeballColor = Colors.white;
 }
 
 /// Constantes para la página de detalle
@@ -136,7 +171,7 @@ class EvolutionChainConstants {
 /// Textos constantes de la aplicación
 class AppTexts {
   // Textos de la página principal
-  static const String appTitle = 'POKEDEX';
+  static const String appTitle = 'Pokédex';
   static const String searchHint = 'Nombre o número';
   static const String searchDescription =
       'Busca un Pokémon por nombre o por su número en la Pokédex Nacional.';

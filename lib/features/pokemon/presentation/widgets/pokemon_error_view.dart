@@ -15,7 +15,8 @@ class PokemonErrorView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Padding(
-        padding: const EdgeInsets.all(PresentationConstants.paddingLarge),
+        padding: const EdgeInsets.all(30),
+        // padding: const EdgeInsets.all(PresentationConstants.paddingLarge),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -24,7 +25,7 @@ class PokemonErrorView extends StatelessWidget {
               color: Colors.red,
               size: 60,
             ),
-            const SizedBox(height: PresentationConstants.paddingLarge),
+            // const SizedBox(height: PresentationConstants.paddingLarge),
             Text(
               AppTexts.errorTitle,
               style: const TextStyle(
@@ -32,13 +33,13 @@ class PokemonErrorView extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            const SizedBox(height: PresentationConstants.paddingMedium),
+            // const SizedBox(height: PresentationConstants.paddingMedium),
             Text(
               message,
               textAlign: TextAlign.center,
               style: const TextStyle(color: Colors.grey),
             ),
-            const SizedBox(height: PresentationConstants.paddingXLarge),
+            // const SizedBox(height: PresentationConstants.paddingXLarge),
             ElevatedButton(
               onPressed: onRetry,
               child: Text(AppTexts.retryText),

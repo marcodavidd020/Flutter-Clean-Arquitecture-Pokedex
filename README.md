@@ -1,4 +1,3 @@
-
 # Pokédex App
 
 <div align="center">
@@ -163,6 +162,11 @@ flutter run
 - Optimización de rendimiento
 - Pruebas unitarias y de widgets
 - Soporte para búsqueda avanzada (por tipo, habilidad, etc.)
+
+## Créditos
+
+- El diseño de la interfaz está inspirado en el trabajo de [Flavio Farias](https://www.figma.com/file/THLxZSlOoUYMZrjFg0Kl1M/Pok%C3%A9dex?type=design&node-id=18241-2789&mode=design&t=loSHVWpRZJb59w6i-0)
+- Los datos Pokémon son proporcionados por [PokéAPI](https://pokeapi.co)
 
 ---
 

@@ -12,8 +12,8 @@ class PokemonAppBar extends StatelessWidget {
     return SliverToBoxAdapter(
       child: Text(
         AppTexts.appTitle,
-        style: GoogleFonts.roboto(
-          fontSize: 28,
+        style: GoogleFonts.poppins(
+          fontSize: InitialContentConstants.titleFontSize,
           fontWeight: FontWeight.w700,
         ),
       ),

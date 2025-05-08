@@ -17,11 +17,11 @@ class PokemonSearchBar extends StatelessWidget {
         children: [
           Text(
             AppTexts.searchDescription,
-            style: const TextStyle(fontSize: 14, color: Colors.grey),
+            style: const TextStyle(fontSize: 12, color: Colors.grey),
           ),
           const SizedBox(height: 12),
           Container(
-            height: 48,
+            height: 65,
             decoration: BoxDecoration(
               color: Colors.grey.shade200,
               borderRadius: BorderRadius.circular(
@@ -29,13 +29,13 @@ class PokemonSearchBar extends StatelessWidget {
               ),
               border: Border.all(color: Colors.grey.shade300, width: 1),
             ),
-            // padding: const EdgeInsets.symmetric(
-            //   horizontal: PresentationConstants.paddingMedium,
-            // ),
+            padding: const EdgeInsets.symmetric(
+              horizontal: PresentationConstants.paddingMedium,
+            ),
             child: Row(
               children: [
                 Icon(Icons.search, color: Colors.grey.shade600),
-                // const SizedBox(width: PresentationConstants.paddingMedium),
+                const SizedBox(width: 12),
                 Expanded(
                   child: TextField(
                     controller: _searchController,
@@ -43,7 +43,7 @@ class PokemonSearchBar extends StatelessWidget {
                       hintText: AppTexts.searchHint,
                       border: InputBorder.none,
                       hintStyle: const TextStyle(
-                        fontSize: 14,
+                        fontSize: 12,
                         color: Colors.grey,
                       ),
                     ),

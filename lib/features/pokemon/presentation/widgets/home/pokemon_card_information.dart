@@ -100,7 +100,7 @@ class PokemonCardInformation extends StatelessWidget {
 
   Widget _buildTypeIcon(String type) {
     // No usar bloque try/catch para que se muestre el SVG
-    final iconPath = 'assets/icons/${type.toLowerCase()}.svg';
+    final iconPath = PokemonTypeUtils.getSvgTypeIcon(type);
 
     return SvgPicture.asset(
       iconPath,
@@ -110,63 +110,7 @@ class PokemonCardInformation extends StatelessWidget {
       // Usar un builder para mostrar un icono de respaldo solo si el SVG falla
       placeholderBuilder: (context) {
         // Seleccionar el icono de respaldo apropiado
-        IconData iconData = Icons.category;
-        switch (type.toLowerCase()) {
-          case 'normal':
-            iconData = Icons.circle_outlined;
-            break;
-          case 'fire':
-            iconData = Icons.local_fire_department;
-            break;
-          case 'water':
-            iconData = Icons.water_drop;
-            break;
-          case 'grass':
-            iconData = Icons.grass;
-            break;
-          case 'electric':
-            iconData = Icons.bolt;
-            break;
-          case 'ice':
-            iconData = Icons.ac_unit;
-            break;
-          case 'fighting':
-            iconData = Icons.sports_martial_arts;
-            break;
-          case 'poison':
-            iconData = Icons.science;
-            break;
-          case 'ground':
-            iconData = Icons.landscape;
-            break;
-          case 'flying':
-            iconData = Icons.air;
-            break;
-          case 'psychic':
-            iconData = Icons.psychology;
-            break;
-          case 'bug':
-            iconData = Icons.bug_report;
-            break;
-          case 'rock':
-            iconData = Icons.blur_circular;
-            break;
-          case 'ghost':
-            iconData = Icons.visibility_off;
-            break;
-          case 'dragon':
-            iconData = Icons.whatshot;
-            break;
-          case 'dark':
-            iconData = Icons.nights_stay;
-            break;
-          case 'steel':
-            iconData = Icons.shield;
-            break;
-          case 'fairy':
-            iconData = Icons.auto_awesome;
-            break;
-        }
+        final iconData = PokemonTypeUtils.getIconForType(type);
 
         return Icon(iconData, size: 15, color: Colors.white);
       },

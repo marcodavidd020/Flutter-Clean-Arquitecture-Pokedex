@@ -172,7 +172,7 @@ class EvolutionChainConstants {
 class AppTexts {
   // Textos de la página principal
   static const String appTitle = 'Pokédex';
-  static const String searchHint = 'Nombre o número';
+  static const String searchHint = '¿Qué Pokémon estás buscando?';
   static const String searchDescription =
       'Busca un Pokémon por nombre o por su número en la Pokédex Nacional.';
 
@@ -253,3 +253,7 @@ class ParticleEffectConstants {
   static const Color particleColor = Colors.white;
 }
 
+//Contantes contenido inicial
+class InitialContentConstants {
+  static const double titleFontSize = 20.0;
+}

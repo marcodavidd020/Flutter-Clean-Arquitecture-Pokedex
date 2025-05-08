@@ -178,6 +178,11 @@ class PokemonTypeUtils {
     }
   }
 
+  //Type Icon Svg
+  static String getSvgTypeIcon(String type) {
+    return 'assets/icons/${type.toLowerCase()}.svg';
+  }
+
   /// Devuelve el color de texto adecuado (blanco o negro) según el color de fondo
   static Color getTextColorForBackground(Color backgroundColor) {
     // Cálculo de luminosidad para determinar si el texto debe ser blanco o negro

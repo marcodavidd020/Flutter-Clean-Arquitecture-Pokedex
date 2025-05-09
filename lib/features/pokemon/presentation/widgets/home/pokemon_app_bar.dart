@@ -14,7 +14,8 @@ class PokemonHomeTitle extends StatelessWidget {
         AppTexts.appTitle,
         style: GoogleFonts.poppins(
           fontSize: InitialContentConstants.titleFontSize,
-          fontWeight: FontWeight.w700,
+          fontWeight: InitialContentConstants.titleFontWeight,
+          color: InitialContentConstants.titleColor,
         ),
       ),
     );

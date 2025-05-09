@@ -5,6 +5,7 @@ import 'package:draggable_home/draggable_home.dart';
 import 'package:pokedex_application/core/utils/pokemon_type_utils.dart';
 import 'package:pokedex_application/core/utils/string_utils.dart';
 import 'package:pokedex_application/features/pokemon/domain/entities/pokemon.dart';
+import 'package:pokedex_application/features/pokemon/domain/entities/pokemon_evolution_chain.dart';
 import 'package:pokedex_application/features/pokemon/presentation/bloc/pokemon_evolution/pokemon_evolution_bloc.dart';
 import 'package:pokedex_application/features/pokemon/presentation/constants/presentation_constants.dart';
 import 'package:pokedex_application/features/pokemon/presentation/widgets/detail/header/favorite_button.dart';
@@ -61,11 +62,27 @@ class _PokemonDetailPageState extends State<PokemonDetailPage>
 
   void _loadEvolutionChain() {
     final state = context.read<PokemonEvolutionBloc>().state;
+    // Solo cargar si no está cargado o si el Pokémon no está en la cadena actual
     if (state is! PokemonEvolutionLoaded) {
       context.read<PokemonEvolutionBloc>().add(
         LoadPokemonEvolutionChain(widget.pokemon.id),
       );
+    } else if (!_evolutionChainContainsPokemon(
+      state.evolutionChain,
+      widget.pokemon.id,
+    )) {
+      context.read<PokemonEvolutionBloc>().add(
+        LoadPokemonEvolutionChain(widget.pokemon.id),
+      );
     }
+  }
+
+  // Verificar si la cadena de evolución ya contiene este Pokémon
+  bool _evolutionChainContainsPokemon(
+    PokemonEvolutionChain chain,
+    int pokemonId,
+  ) {
+    return chain.chain.any((pokemon) => pokemon.id == pokemonId);
   }
 
   void _navigateToPokemon(Pokemon pokemon) {
@@ -79,9 +96,10 @@ class _PokemonDetailPageState extends State<PokemonDetailPage>
   }
 
   void _handleBackPressed() {
-    if (Navigator.canPop(context)) {
+    try {
       context.pop();
-    } else {
+    } catch (e) {
+      // Si no hay nada que hacer pop, redirigir a la página de inicio
       context.go('/');
     }
   }

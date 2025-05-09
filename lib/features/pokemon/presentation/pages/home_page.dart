@@ -9,10 +9,10 @@ import 'package:pokedex_application/features/pokemon/presentation/constants/pres
 import 'package:pokedex_application/features/pokemon/presentation/widgets/home/pokemon_app_bar.dart';
 import 'package:pokedex_application/features/pokemon/presentation/widgets/home/pokemon_bokeball_background.dart';
 import 'package:pokedex_application/features/pokemon/presentation/widgets/home/pokemon_grid.dart';
+import 'package:pokedex_application/features/pokemon/presentation/widgets/home/pokemon_grid_loading_view.dart';
 import 'package:pokedex_application/features/pokemon/presentation/widgets/home/pokemon_home_app_bar.dart';
 import 'package:pokedex_application/features/pokemon/presentation/widgets/home/pokemon_search_bar.dart';
 import 'package:pokedex_application/features/pokemon/presentation/widgets/pokemon_error_view.dart';
-import 'package:pokedex_application/features/pokemon/presentation/widgets/home/pokemon_loading_view.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -30,9 +30,16 @@ class _HomePageState extends State<HomePage>
   @override
   void initState() {
     super.initState();
-    context.read<PokemonListWithDetailsBloc>().add(
-      const FetchPokemonListWithDetails(limit: 40),
-    );
+
+    // Verificar si ya hay datos cargados antes de hacer una nueva solicitud
+    final currentState = context.read<PokemonListWithDetailsBloc>().state;
+    if (currentState is! PokemonListWithDetailsLoaded &&
+        currentState is! PokemonListWithDetailsLoadingMore) {
+      context.read<PokemonListWithDetailsBloc>().add(
+        const FetchPokemonListWithDetails(limit: 40),
+      );
+    }
+
     _scrollController.addListener(_onScroll);
 
     // Configura la animación
@@ -115,6 +122,10 @@ class _HomePageState extends State<HomePage>
         }
 
         return const SizedBox.shrink();
+        // return _buildScaffoldWithBackground(
+        //   body: const PokemonGridLoadingView(),
+        //   withActions: false,
+        // );
       },
     );
   }

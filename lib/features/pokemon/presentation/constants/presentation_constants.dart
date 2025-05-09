@@ -270,4 +270,6 @@ class PokemonImages {
 //Contantes contenido inicial
 class InitialContentConstants {
   static const double titleFontSize = 20.0;
+  static const Color titleColor = Colors.black;
+  static const FontWeight titleFontWeight = FontWeight.w700;
 }

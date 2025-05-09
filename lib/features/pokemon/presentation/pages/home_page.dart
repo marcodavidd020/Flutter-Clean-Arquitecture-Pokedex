@@ -9,6 +9,7 @@ import 'package:pokedex_application/features/pokemon/presentation/constants/pres
 import 'package:pokedex_application/features/pokemon/presentation/widgets/home/pokemon_app_bar.dart';
 import 'package:pokedex_application/features/pokemon/presentation/widgets/home/pokemon_bokeball_background.dart';
 import 'package:pokedex_application/features/pokemon/presentation/widgets/home/pokemon_grid.dart';
+import 'package:pokedex_application/features/pokemon/presentation/widgets/home/pokemon_grid_loading_view.dart';
 import 'package:pokedex_application/features/pokemon/presentation/widgets/home/pokemon_home_app_bar.dart';
 import 'package:pokedex_application/features/pokemon/presentation/widgets/home/pokemon_search_bar.dart';
 import 'package:pokedex_application/features/pokemon/presentation/widgets/pokemon_error_view.dart';
@@ -115,6 +116,10 @@ class _HomePageState extends State<HomePage>
         }
 
         return const SizedBox.shrink();
+        // return _buildScaffoldWithBackground(
+        //   body: const PokemonGridLoadingView(),
+        //   withActions: false,
+        // );
       },
     );
   }
